@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<c3p0-config>  
+    <named-config name="myc3p0xml">  
+        <property name="driverClass">com.mysql.jdbc.Driver</property>  
+        <property name="jdbcUrl">jdbc:mysql://localhost:3306/student?characterEncoding=utf-8</property>  
+        <property name="user">root</property>  
+        <property name="password">123456</property>  
+        <property name="maxPoolSize">6</property>  
+        <property name="initialPoolSize">4</property>
+    </named-config>
+    
+</c3p0-config>
