@@ -1,0 +1,11 @@
+package http.woniuxy.tomcat;
+
+public class readme {
+	/*
+	 * 关于集合
+	 * 首先list集合采用了模板设计模式
+	 * 接下来是源码分析
+	 * 
+	 * 
+	 */
+}

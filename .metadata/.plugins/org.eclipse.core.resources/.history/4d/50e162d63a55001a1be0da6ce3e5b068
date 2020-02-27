@@ -1,0 +1,50 @@
+package http.woniuxy.tomcat.RequestAndResponse;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.HashMap;
+import java.util.Map;
+
+public class MyRequset {
+	//储存请求的Url
+		private String uri;
+		//存储请求方式
+		private String method;
+		//存储除请求首行外所有请求头信息
+		Map<String,String> requestHeader = new HashMap<String,String>();
+		
+		public MyRequset(InputStream inputStream) throws IOException {
+			BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+	        String[] methodAndUri = bufferedReader.readLine().split(" ");
+	        this.method = methodAndUri[0];
+	        this.uri = methodAndUri[1];
+	        System.out.println("请求类型："+ method);
+	        System.out.println("请求路径："+ uri);
+
+		}
+
+		public MyRequset(String uri, String method, Map<String, String> requestHeader) {
+			super();
+			this.uri = uri;
+			this.method = method;
+			this.requestHeader = requestHeader;
+		}
+
+		public String getUri() {
+			return uri;
+		}
+
+		public void setUri(String uri) {
+			this.uri = uri;
+		}
+
+		public String getMethod() {
+			return method;
+		}
+
+		public void setMethod(String method) {
+			this.method = method;
+		}
+}

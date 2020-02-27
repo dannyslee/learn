@@ -1,0 +1,21 @@
+package learn.woniuxy.anno;
+
+
+@A("admin")
+public class AnnotationDemo {
+	@A("xxxx")
+	@Deprecated //过时
+	public static void demo() {
+		
+	}
+	
+    public void demo(@A("xxxx") String str) {
+		demo();
+	}
+    
+    public static void main(String[] args) {
+    	@SuppressWarnings("unused") //禁止警告
+		@A("xxxx")
+		AnnotationDemo annotationDemo = new AnnotationDemo();
+	}
+}

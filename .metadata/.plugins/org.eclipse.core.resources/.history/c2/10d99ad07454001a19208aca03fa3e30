@@ -1,0 +1,10 @@
+package learn.woniuxy.anno;
+
+public class Execute {
+
+	public static void executeMethod(Class<ExecuteDemo> class1) {
+		// TODO Auto-generated method stub
+		
+	}
+
+}

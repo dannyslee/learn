@@ -1,0 +1,7 @@
+package com.woniuxy.springmvc.controller;
+
+
+@Controller
+public class UserController {
+
+}

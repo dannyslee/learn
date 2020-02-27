@@ -1,0 +1,31 @@
+package http.woniuxy.tomcat.RequestAndResponse;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class MyRequset {
+	//储存请求的Url
+		private String uri;
+		//存储请求方式
+		private String method;
+		//存储除请求首行外所有请求头信息
+		Map<String,String> requestHeader = new HashMap<String,String>();
+		
+
+
+		public String getUri() {
+			return uri;
+		}
+
+		public void setUri(String uri) {
+			this.uri = uri;
+		}
+
+		public String getMethod() {
+			return method;
+		}
+
+		public void setMethod(String method) {
+			this.method = method;
+		}
+}

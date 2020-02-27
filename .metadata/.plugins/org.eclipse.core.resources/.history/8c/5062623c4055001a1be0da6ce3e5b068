@@ -1,0 +1,45 @@
+package http.woniuxy.tomcat.socket;
+
+import java.io.IOException;
+import java.net.Socket;
+
+import http.woniuxy.tomcat.Tomcat;
+import http.woniuxy.tomcat.RequestAndResponse.MyRequest;
+import http.woniuxy.tomcat.RequestAndResponse.MyResponse;
+import http.woniuxy.tomcat.servlet.MyHttpServlet;
+
+public class SocketProcess extends Thread{
+	protected Socket socket;
+
+	public SocketProcess(Socket socket) {
+		super();
+		this.socket = socket;
+	}
+
+	@Override
+	public void run() {
+		try {
+			MyRequest request = new MyRequest(socket.getInputStream());
+			//MyResponse response = new MyResponse();
+			
+			String servletName = (String) Tomcat.servletMappings.get(request.getUri());
+			
+			//判断是否有相应的uri
+			if(servletName!=null && servletName.isEmpty()) {
+				MyHttpServlet servlet = (MyHttpServlet)Tomcat.servlets.get(servletName);
+				if(servlet!=null) {
+					
+				}
+			}
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		
+	}
+	
+	
+}

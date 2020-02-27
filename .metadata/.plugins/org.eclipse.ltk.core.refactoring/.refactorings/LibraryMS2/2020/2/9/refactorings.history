@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Copy source folder &apos;jstl-1.2.jar&apos; to &apos;lib&apos;&#x0D;&#x0A;- Original project: &apos;LibraryMS2&apos;&#x0D;&#x0A;- Destination element: &apos;lib&apos;&#x0D;&#x0A;- Original element: &apos;LibraryMS2/WebContent/WEB-INF/lib/jstl-1.2.jar&apos;" description="Copy source folder" element1="/WebContent\/WEB-INF\/lib\/jstl-1.2.jar" flags="6" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyRoots" roots="1" stamp="1582631134409" target="/MySpringMVC/WebContent/WEB-INF/lib" version="1.0"/>
+</session>

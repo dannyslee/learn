@@ -1,0 +1,8 @@
+package learn.woniuxy.anno;
+
+
+@A("admin")
+public class AnnotationDemo {
+	@A
+	
+}

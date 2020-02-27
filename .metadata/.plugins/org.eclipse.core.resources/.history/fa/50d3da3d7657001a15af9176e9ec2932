@@ -1,0 +1,363 @@
+package com.woniuxy.springmvc.core;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
+
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.catalina.tribes.util.Arrays;
+
+import com.woniuxy.springmvc.annotation.Controller;
+import com.woniuxy.springmvc.annotation.RequestMapping;
+
+
+
+public class DispatcherServlet extends HttpServlet{
+
+	private static final long serialVersionUID = 1L;
+	//存储所有类全名
+	private List<String> classNames = new ArrayList<>();
+	//以类名+类对象为键值存储
+	private Map<String,Object>  ioc = new HashMap<>();
+	//存储请求映射与Controller对应关系
+	private Map<String,Object> controllerMappings = new HashMap<>();
+	//存储请求映射与Menthod对应关系
+	private Map<String,Object> methodMappings = new HashMap<>();
+	
+	private HandlerMapper handlerMapper;
+	
+	private HandlerAdapter handlerAdaapter;
+	
+	
+	@Override
+	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		Object result = handlerAdaapter.adapter(req, resp);
+	}
+
+
+
+	@Override
+	public void init() throws ServletException {
+		//获取包名
+		String doLoadConfig = doLoadConfig();
+		//判断是否获取包名
+		if(doLoadConfig==null) {
+			return;
+		}
+		System.out.println(doLoadConfig);
+		//扫描包下所有类文件，获取类全名
+		doScannerNew(doLoadConfig);
+		//doScanner(doLoadConfig); //无法使用
+		//遍历所有类全名，判断类上是否存在Controller注解（保留到运行时，只能修饰类），如果存在，则创建对象并按照类名小驼峰形式为键，对象作为值
+		//实例化Controller对象	
+		try {
+			doInstance();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		//获取方法
+		initMapping();
+		
+		//创建处理器映射器对象
+		handlerMapper = new HandlerMapper(classNames);
+	}
+	
+	private void initMapping() {
+		//获取所有Controller对象
+		for(Object controller:ioc.values()) {
+			Class<? extends Object> c1 = controller.getClass();
+			//判断当前类是否存在RequestMapping注解
+			System.out.println(c1.getSimpleName()+"当前类是否存在RequestMapping注解："+c1.isAnnotationPresent(RequestMapping.class));
+			if(!c1.isAnnotationPresent(RequestMapping.class)) {
+				continue;
+			}
+			
+			//获取当前Controller的RequsetMapping注解
+			RequestMapping declaredAnnotation = c1.getDeclaredAnnotation(RequestMapping.class);
+			//获取当前映射值
+			String controllerMappingValue = declaredAnnotation.value();
+			System.out.println("当前映射值"+controllerMappingValue);
+
+			//获取当前Controller的所有方法
+			Method[] declaredMethods = c1.getDeclaredMethods();
+			for (Method method : declaredMethods) {
+				//判断当前方法是否存在RequestsMapping注解
+				System.out.println(method.getName()+"方法是否存在RequestsMapping注解"+method.isAnnotationPresent(RequestMapping.class));
+				if(!method.isAnnotationPresent(RequestMapping.class)) {
+					continue;
+				}
+				//获取当前方法上的RequestMapping注解
+				RequestMapping methodRM = method.getDeclaredAnnotation(RequestMapping.class);
+				//获取RM的注解值
+				String methodRMValue = methodRM.value();
+				System.out.println(method.getName()+"获取RM的注解值:"+methodRMValue);
+				//判断值是否有效
+				if (methodRMValue.length()<1 || controllerMappingValue.length()<1 ) {
+					continue;
+				}
+				//键
+				String key = controllerMappingValue+methodRMValue;
+				System.out.println(method.getName()+"的键："+key);
+				//建立请求映射与Controller映射
+				controllerMappings.put(key,controller);
+				//建立请求映射与Method映射
+				methodMappings.put(key, method);
+			}
+		}
+	}
+
+	
+	private void doInstance() throws Exception{
+		/*
+		 *遍历所有类全面，判断类上是否存在Controller注解（保留到运行时，只能修饰类），
+		 *如果存在，则创建对象并按照类名小驼峰形式为键，对象作为值
+		 */
+		for(String classname:classNames) {
+			System.out.println(classname);
+			//判断是否存在注解
+			boolean annotationPresent = Class.forName(classname).isAnnotationPresent(Controller.class);
+			System.out.println(annotationPresent);	
+			//如果存在注解，以类名+对象为键值对存入
+			//处理
+			String simpleName = Class.forName(classname).getSimpleName();
+			simpleName = simpleName.substring(0,1).toLowerCase()+simpleName.substring(1);
+			System.out.println(simpleName);
+			if (annotationPresent) {
+				ioc.put(simpleName, Class.forName(classname).newInstance());
+			}
+		}
+		
+	}
+	
+
+	//获取包名
+	private String doLoadConfig() {
+		String property = null;
+
+		// 获取当前ServletConfig对象
+		ServletConfig config = getServletConfig();
+		// 获取初始化参数信息
+		String initParameter = config.getInitParameter("config");
+		// 如果没有获取到用户配置的配置文件名，则使用默认配置文件名称
+		if (initParameter == null) {
+			initParameter = "param.properties";//注意：当前的配置文件放在了src下，而不是项目文件夹底部
+		}
+		System.out.println(initParameter);
+		// 创建properties对象
+		Properties properties = new Properties();
+		// 加载Properties文件
+		// 方法1.使用类加载器
+		// getClassLoader();//获取当前类的类加载器
+		// getResourceAsStream("");//获取传入的文件流
+		InputStream resourceAsStream = DispatcherServlet.class.getClassLoader().getResourceAsStream(initParameter);// 获取传入的文件流
+		// 方法2.根据ServletConfig上下文
+		// InputStream resourceAsStream2 =
+		// config.getServletContext().getResourceAsStream(initParameter);
+
+		try {
+			properties.load(resourceAsStream);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		// 获取Properties文件中配置的包名
+		property = properties.getProperty("package");
+
+		return property;
+	}
+	
+	
+	private void doScannerNew(String packageName) {
+		String replaceAll = packageName.replaceAll("\\.", "/");
+		System.out.println(replaceAll);
+		//获取文件真实路径
+		String path = DispatcherServlet.class.getClassLoader().getResource(replaceAll).getPath();
+		System.out.println(path);
+		//将系统空格转为Java空格（针对于tomcat安装在c盘）
+		//String replace = path.replaceAll("%20", " ");
+		//创建File对象
+		File file = new File(path);
+//		//判断是否为空
+//		if (file == null) {
+//			return;
+//		}
+		//获取子文件
+		File[] listFiles = file.listFiles();
+		//判断是否为null
+		if (listFiles == null) {
+			return;
+		}
+		
+		for (File file2 : listFiles) {
+			//获取文件名称
+			String name = file2.getName();
+			System.out.println(name);
+			if (file2.isDirectory()) {
+				doScanner(packageName+"."+name);
+			}else {
+				//判断是否为java文件
+				if (!name.endsWith(".class")) {
+					continue;
+				}
+				//获取类名
+				String replace2 = name.replace(".class", "");
+				System.out.println(replace2);
+				
+				//获取类全面
+				String string = packageName+"."+replace2;
+				System.out.println(string);
+				//存储类全名
+				classNames.add(string);
+			}
+		}
+		
+	}
+	
+	
+	//获取所有类全名
+	private void doScanner(String pakeageName) {
+		//扫描指定包下所有类文件，获取所有类全面，并存储到classNames集合中
+		//获取指定文件路径：包名
+		///MySpringMVC/src/com/woniuxy/springmvc/controller/GoodsController.java
+		String str = "src\\"+pakeageName.replace(".", "\\");
+		System.out.println(str);
+		File file = new File(str);
+		find(file,classNames);
+		for (String string : classNames) {
+			System.out.println(string);
+		}
+	}
+
+	
+	//遍历
+	private void find(File f2,List<String> lists) {
+		String replaceAll = null;
+		File[] f = f2.listFiles();
+		System.out.println(f2.getName());
+		if(f!=null && f.length!=0) {
+			for(File f1:f) {
+				find(f1,lists);				
+			}
+		}
+		System.out.println(f2.length());
+		if(f2.getName().endsWith(".java")) {
+			replaceAll = (f2.getName());
+			lists.add(replaceAll);		
+		}
+		System.out.println("find方法："+replaceAll);
+	}
+	
+//	private Object adapter(HttpServletRequest req, HttpServletResponse resp) {
+//	Object invoke = null;
+//	//判断handlerMapping的map中是否有值
+//			System.out.println("doDispatch中controllersMapping是否无内容："+controllerMappings.isEmpty());
+//			if (controllerMappings.isEmpty()) {
+//				return invoke;
+//			}
+////			//获取uri,uri会包含根目录
+////			String requestURI = req.getRequestURI();
+////			System.out.println("doDispatch中获取的原始uri:"+requestURI);
+////			//获取内容根目录
+////			String contextPath = req.getContextPath();
+////			System.out.println("doDispatch中获取的根目录"+contextPath);
+//	//
+////			//对uri处理,将根目录去掉，如果是多个斜杠转换为一条
+////			String uri = requestURI.replace(contextPath, "").replace("/+", "/");
+////			
+//			//使用方法getPathinfo,获取uri
+//			String uri = req.getPathInfo();
+//			
+//			System.out.println("doDispatch中获取的已处理的uri:"+uri);
+//			//判断handlerMapping是否含有url
+//			if (!this.controllerMappings.containsKey(uri)) {
+//				//设置响应编码
+//				resp.setCharacterEncoding("utf-8");
+//				try {
+//					//如果没有，报404错误
+//					resp.sendError(404,"未找到相关内容");
+//					//resp.getWriter().write("404 WARING");
+//				} catch (IOException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
+//			
+//			}
+//			//判断map中是否有值
+//			
+//			
+//			//如果有，通过url获取所有的方法
+//			Method method = (Method)this.methodMappings.get(uri);
+//			//获取参数类型
+//			Class<?>[] methodParameterTypes = method.getParameterTypes();
+//			if (methodParameterTypes == null) {
+//				//如果发现参数类型为空，实则为无参方法
+//				try {
+//					invoke = method.invoke(this.controllerMappings.get(uri));
+//				} catch (IllegalAccessException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				} catch (IllegalArgumentException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				} catch (InvocationTargetException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
+//				
+//			}
+//			//获取请求的参数
+//			Map<String, String[]> requestParameterMap = req.getParameterMap();
+//			//将参数值存入数组,通过参数类型的长度可以确定参数值的长度
+//			Object[]  methodParameterValues = new Object[methodParameterTypes.length];
+//			//对req，resp参数名进行处理
+//			for (int i = 0; i < methodParameterValues.length; i++) {
+//				//获取参数类型的名称
+//				String requestParam = methodParameterTypes[i].getSimpleName();
+//				//如果类型名称与HttpServletRequest一致，将其参数名设为req
+//				if(requestParam.equals("HttpServletRequest")) {
+//					methodParameterValues[i] = req;
+//					continue;//该参数一旦被判别，就不需要继续判断该值了
+//				}
+//				//如果类型名称与HttpServletRespons一致，将其参数名设为resp
+//				if (requestParam.equals("HttpServletRespons")) {
+//					methodParameterValues[i] = resp;
+//					continue;
+//				}		
+//				//储存其他类型参数
+//				if(requestParam.equals("String")) {
+//					for(Map.Entry<String, String[]> param:requestParameterMap.entrySet()) {
+//						String value = Arrays.toString(param.getValue());
+//						methodParameterValues[i] = value;
+//					}
+//				}
+//			}
+//			//利用反射机制，调用方法
+//			try {
+//				invoke = method.invoke(this.controllerMappings.get(uri), methodParameterValues);
+//			} catch (IllegalAccessException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			} catch (IllegalArgumentException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			} catch (InvocationTargetException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//	return invoke;
+//}
+}

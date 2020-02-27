@@ -1,0 +1,22 @@
+package learn.woniuxy.tcphomework;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+
+public class ExecJDBC {
+	
+	
+	
+	
+	void sql(String sql) {
+		JDBCUtil util = new JDBCUtil();
+		Connection con = util.getConnection();
+		PreparedStatement state = null;
+		state = new PreparedStatement(sql);
+		
+	}
+	
+	public static void main(String[] args) {
+		
+	}
+}

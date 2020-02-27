@@ -1,0 +1,11 @@
+package learn.woniuxy.anno;
+
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+
+@Retention(RetentionPolicy.RUNTIME)
+//只能修饰类与方法
+@Target(ElementType.TYPE)
+public @interface TableAnno {
+
+}

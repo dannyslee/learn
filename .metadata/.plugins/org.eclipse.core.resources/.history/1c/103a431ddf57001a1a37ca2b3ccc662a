@@ -1,0 +1,30 @@
+package com.woniuxy.springmvc.util;
+
+
+public class ConverterUtil<T> implements Converter<String,Class<T>>{
+	
+	//单例模式
+	private static final ConverterUtil<?> converter = new ConverterUtil<?>();
+	
+	public ConverterUtil() {}
+
+	public static ConverterUtil<?> getInstance() {
+		return converter;
+	}
+
+	@Override
+	public Class<T> convert(String k, Class<T> t) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+
+
+
+
+
+
+	
+}

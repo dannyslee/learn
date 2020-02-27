@@ -1,0 +1,38 @@
+package learn.woniuxy.anno;
+
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Target;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+
+public class Execute {
+
+	public static void executeMethod(Class<ExecuteDemo> class1) {
+		try {
+			ExecuteDemo newInstance = class1.newInstance();
+			@test(true)
+			Method declaredMethod = class1.getDeclaredMethod("test");
+			Object invoke = declaredMethod.invoke(newInstance);
+			System.out.println(invoke);
+		} catch (NoSuchMethodException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SecurityException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalArgumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+}

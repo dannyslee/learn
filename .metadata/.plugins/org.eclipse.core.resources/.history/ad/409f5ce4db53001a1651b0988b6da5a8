@@ -1,0 +1,12 @@
+package learn.woniuxy.reflect;
+
+public class Test {
+	public static void main(String[] args) {
+		String sql = "select id,name,output,price,writer,wid,createdate from vi_books where id=? ";
+		
+		String [] arr2 = sql.split("\\s+");
+		for(String ss : arr2){
+		    System.out.println(ss);
+		}
+	}
+}

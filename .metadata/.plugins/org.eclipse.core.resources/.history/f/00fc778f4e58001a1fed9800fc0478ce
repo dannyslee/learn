@@ -1,0 +1,5 @@
+package com.springmvc.frame;
+
+public class UserController {
+
+}

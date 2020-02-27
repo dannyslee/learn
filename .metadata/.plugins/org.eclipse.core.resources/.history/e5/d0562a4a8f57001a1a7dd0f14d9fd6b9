@@ -1,0 +1,16 @@
+package com.woniuxy.springmvc.controller;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.woniuxy.springmvc.annotation.RequestMapping;
+import com.woniuxy.springmvc.annotation.RequestParam;
+
+@RequestMapping("/util")
+public class ConverterController {
+	@RequestMapping("/converter")
+	public String  doConverter(@RequestParam("XXXpo") PO po,HttpServletRequest req) {
+		req.setAttribute("XXXpo", po);
+		return "XXXpo";
+	}
+}

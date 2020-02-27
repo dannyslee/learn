@@ -1,0 +1,90 @@
+package learn.woniuxy.tcp;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.net.UnknownHostException;
+
+/**
+ * 服务端
+ * @author Administrator
+ *
+ */
+public class GetHeadDemo {
+
+	public static void main(String[] args) {
+		Socket brower = null;
+		OutputStream ops = null;
+		InputStream ins = null;
+		ByteArrayOutputStream baos =null;
+		int len;
+		String dataStr = "oper=register&account=13992666893&pass=admin111&rpass=admin111";
+		String str = "POST /WoniuShop1.0.0/useroper HTTP/1.1\r\n" + 
+				"Host: localhost:8080\r\n" + 
+				"Content-Length:"+dataStr.length()+"\r\n" + 
+				"Content-Type: application/x-www-form-urlencoded; charset=UTF-8\r\n" + 
+				"Cookie: JSESSIONID=5F8FCC77D22CBAA9EBA5567C244B43C0\r\n"+
+				"\r\n"+dataStr; //data
+
+		try {
+			brower = new Socket("localhost",8888);
+			
+			ops = brower.getOutputStream();
+			ops.write(str.getBytes());//str转为byte数组
+						
+			ins = brower.getInputStream();
+			
+			byte[] con = new byte[1024];
+			len =-1;
+			baos = new ByteArrayOutputStream();
+			while((len=ins.read(con))!=-1) {
+				baos.write(con,0,len);
+			}
+			System.out.println(baos.toString());	
+			
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+//				try {
+//					if(baos!=null)
+//						baos.close();
+//				} catch (IOException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
+				try {
+					if(ins!=null)
+						ins.close();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				try {
+					if(ops!=null)
+						ops.close();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				try {
+					if(brower!=null)
+						brower.close();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				
+				
+		}
+		
+		
+	}
+}

@@ -1,0 +1,14 @@
+package http.woniuxy.tomcat.socket;
+
+import java.net.Socket;
+
+public class SocketProcess extends Thread{
+	protected Socket socket;
+
+	public SocketProcess(Socket socket) {
+		super();
+		this.socket = socket;
+	}
+	
+	
+}

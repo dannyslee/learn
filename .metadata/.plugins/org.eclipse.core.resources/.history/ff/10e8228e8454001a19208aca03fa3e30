@@ -1,0 +1,29 @@
+package learn.woniuxy.anno;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+public class CreateTest {
+	//获取所有类名
+	<T> List<T> findClass(String file){
+		List<T> classNames = null;
+		//获取所有class，使用递归
+		//Class.forName("learn.woniuxy.reflect.ClassPO")
+		return classNames;	
+	}
+	
+	//根据注解判断是否创建该对象
+	<T> void createClass(List<T> ts) throws Exception {
+		Map<String,Object> map =  new HashMap<>();
+		for(T t:ts ) {
+			//判断该类是否存在注解
+			boolean annotationPresent = t.getClass().isAnnotationPresent(Create.class);
+			//如果存在以类名+类对象为键值对形式存入
+			if(annotationPresent) {
+				map.put(t.toString(), t.getClass().newInstance());
+			}
+		}
+		
+	}
+}

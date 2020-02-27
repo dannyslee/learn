@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename package &apos;http.woniuxy.tomcat.RequestAndResponse&apos; to &apos;http.woniuxy.tomcat.requestandresponse&apos;&#x0D;&#x0A;- Original project: &apos;EasyTOMCAT&apos;&#x0D;&#x0A;- Original element: &apos;EasyTOMCAT/src/http.woniuxy.tomcat.RequestAndResponse&apos;&#x0D;&#x0A;- Renamed element: &apos;EasyTOMCAT/src/http.woniuxy.tomcat.requestandresponse&apos;&#x0D;&#x0A;- Update references to refactored element&#x0D;&#x0A;- Update textual occurrences in comments and strings" description="Rename package &apos;http.woniuxy.tomcat.RequestAndResponse&apos;" flags="589830" hierarchical="false" id="org.eclipse.jdt.ui.rename.package" input="/src&lt;http.woniuxy.tomcat.RequestAndResponse" name="http.woniuxy.tomcat.requestandresponse" qualified="false" references="true" stamp="1582507806243" textual="false" version="1.0"/>
+</session>

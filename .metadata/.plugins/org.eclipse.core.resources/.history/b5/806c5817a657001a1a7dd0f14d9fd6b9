@@ -1,0 +1,24 @@
+package com.woniuxy.springmvc.controller;
+
+import java.math.BigDecimal;
+
+public class Demo {
+	public static String name;
+	public static BigDecimal money;
+	
+	public static String getName() {
+		return name;
+	}
+	public static void setName(String name) {
+		Demo.name = name;
+	}
+	public static BigDecimal getMoney() {
+		return money;
+	}
+	public static void setMoney(BigDecimal money) {
+		Demo.money = money;
+	}
+	
+	
+	
+}

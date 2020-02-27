@@ -1,0 +1,46 @@
+package learn.woniuxy.xml;
+
+import java.io.File;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.dom4j.Document;
+import org.dom4j.DocumentException;
+import org.dom4j.Node;
+import org.dom4j.io.SAXReader;
+
+public class homework {
+	private Map<String,String> servlets = new HashMap<String,String>();
+	private Map<String,String> servletMappings = new HashMap<String,String>();
+
+	//获取xml的配置信息
+	static void getXMLInfo() throws DocumentException {
+		//准备
+		//创建SaxReader对象
+		SAXReader reader = new SAXReader();
+		//将XML加载到程序中
+		Document read = reader.read(new File("web.xml"));
+		//获取servlet-name
+		List selectNodes = read.selectNodes("/servlet");
+		System.out.println(selectNodes);
+		for (Object object : selectNodes) {
+			System.out.println(object);
+		}
+		//获取servlet-class
+		//List selectNodes2 = read.selectNodes("//servlet-class");
+		//获取servlet-mapping
+		//List selectNodes3 = read.selectNodes("//servlet-mapping");
+		//获取url-pattern
+		//List selectNodes4 = read.selectNodes("//url-pattern");
+	}
+	
+	public static void main(String[] args) {
+		 try {
+			getXMLInfo();
+		} catch (DocumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+}

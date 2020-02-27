@@ -1,0 +1,12 @@
+package com.woniuxy.springmvc.controller;
+
+import com.woniuxy.springmvc.annotation.Controller;
+import com.woniuxy.springmvc.annotation.RequestMapping;
+
+@Controller
+public class GoodsController {
+	@RequestMapping("/show")
+	public void show() {
+		
+	}
+}

@@ -1,0 +1,20 @@
+package learn.woniuxy.anno;
+
+import java.util.List;
+
+public class CreateTest {
+	//获取所有类名
+	<T> List<T> findClass(String file){
+		List<T> classNames = null;
+		//获取所有class
+		return classNames;	
+	}
+	
+	//根据注解判断是否创建该对象
+	<T> void createClass(List<T> ts) {
+		for(T t:ts ) {
+			Create declaredAnnotation = t.getClass().getDeclaredAnnotation(Create.class);
+		}
+		
+	}
+}

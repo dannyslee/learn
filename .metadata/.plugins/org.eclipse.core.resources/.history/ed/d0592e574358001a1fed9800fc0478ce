@@ -1,0 +1,40 @@
+package learn.woniuxy.json;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import learn.woniuxy.reflect.UserPO;
+
+public class JSONDemo {
+	public static void main(String[] args) {
+		UserPO po =new UserPO(1,"admin","123");
+		UserPO po1 =new UserPO(2,"adminn","133");
+		//创建ObjectMapper对象
+		ObjectMapper om = new ObjectMapper();
+		//调用方法将Java对象转为JSON
+		try {
+			String str = om.writeValueAsString(po);
+			System.out.println(str);
+		} catch (JsonProcessingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		//数组方式
+		List<UserPO> l = new ArrayList<>();		
+		l.add(po1);
+		l.add(po);
+		try {
+			String str1 = om.writeValueAsString(l);
+			System.out.println(str1);
+		} catch (JsonProcessingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+}

@@ -1,0 +1,61 @@
+package learn.woniuxy.anno;
+
+import java.io.File;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+public class CreateTest {
+	//获取所有类名
+	<T> List<T> findClass(String file){
+		List<T> classNames = null;
+		//获取所有class，使用递归
+		
+		//Class.forName("learn.woniuxy.reflect.ClassPO")
+		return classNames;	
+	}
+	
+	//根据注解判断是否创建该对象
+	<T> void createClass(List<T> ts) throws Exception {
+		Map<String,Object> map =  new HashMap<>();
+		for(T t:ts ) {
+			//判断该类是否存在注解
+			boolean annotationPresent = t.getClass().isAnnotationPresent(Create.class);
+			//如果存在以类名+类对象为键值对形式存入
+			if(annotationPresent) {
+				map.put(t.toString(), t.getClass().newInstance());
+			}
+		}
+		
+	}
+	
+	//遍历
+	static void find(File f2) {
+		File[] f = f2.listFiles();
+		long a =0;
+		if(f!=null && f.length!=0) {
+			for(File f1:f) {
+				find(f1);				
+			}
+		}
+		System.out.println(f2.length());
+		if(f2.getName().endsWith(".java")) {
+			String replaceAll = (f2.getPath()+"."+f2.getName()).replace("\\", ".");
+			System.out.println(replaceAll);
+		}
+	}
+	
+	//删除指定位置
+	<T> T replace( T t,String str){
+		t = null;
+		t = (T) t.toString().replace(str, "");
+		return t;		
+	}
+	
+	public static void main(String[] args) {
+		String str = "D:\\JAVA\\FILE\\javalearn20200207\\src";
+		File f2 =new File(str);
+		find(f2);
+	}
+	
+}

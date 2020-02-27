@@ -1,0 +1,5 @@
+package http.woniuxy.web.nodes;
+
+public class GetNodes {
+
+}

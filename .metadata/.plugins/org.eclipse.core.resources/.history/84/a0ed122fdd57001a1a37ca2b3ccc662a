@@ -1,0 +1,26 @@
+package com.woniuxy.springmvc.util;
+
+import com.woniuxy.springmvc.po.UserPO;
+
+public class ConverterUtil implements Converter<T, K>{
+	
+	//单例模式
+	private static final ConverterUtil converter = new ConverterUtil();
+	
+	public ConverterUtil() {}
+
+	public static ConverterUtil getInstance() {
+		return converter;
+	}
+
+	@Override
+	public <T,K> K convert(T t, K k) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+
+	
+}

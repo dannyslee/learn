@@ -1,0 +1,16 @@
+package learn.woniuxy.anno;
+/**
+ * 执行单元测试代码
+ * @author Administrator
+ *
+ */
+public class ExecuteDemo {
+	@Test
+	public int test() {
+		System.out.println();
+		return 88;
+	}
+	public static void main(String[] args) {
+		Execute.executeMethod(ExecuteDemo.class);
+	}
+}

@@ -1,0 +1,5 @@
+package weekwork.woniuxy.web.servlet;
+
+public abstract class MyHttpServlet {
+
+}

@@ -1,0 +1,7 @@
+package learn.woniuxy.anno;
+
+public @interface A {
+	
+	int num() default 0;
+	String value();
+}

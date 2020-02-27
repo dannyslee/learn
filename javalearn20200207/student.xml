@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<schpol name="蜗牛学院">
+  <class name="65期Java开发班">
+    <student>
+      <name>小小</name>
+      <name>女</name>
+    </student>
+    <age>22</age>
+    <sex>男</sex>
+    <student/>
+    <age>21</age>
+    <sex/>
+  </class>
+</schpol>

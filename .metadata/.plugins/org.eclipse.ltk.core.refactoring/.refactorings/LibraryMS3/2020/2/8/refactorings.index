@@ -1,0 +1,25 @@
+1582336570344	Delete element
+1582336962827	Extract local variable 'read'
+1582337208874	Extract local variable 'selectSingleNode'
+1582337236556	Extract local variable 'text'
+1582337380744	Extract local variable 'selectNodes'
+1582337411710	Extract local variable 'selectNodes2'
+1582337682833	Extract local variable 'selectNodes3'
+1582337685155	Extract local variable 'selectNodes4'
+1582337913169	Delete element
+1582337999508	Copy file
+1582338182214	Extract local variable 'name'
+1582338376275	Extract local variable 'selectNodes'
+1582338793640	Copy file
+1582338802095	Copy compilation unit
+1582340097199	Extract local variable 'selectNodes'
+1582340560056	Extract local variable 'selectObject'
+1582340926180	Rename type 'getNodes'
+1582341379909	Delete element
+1582343833687	Extract local variable 'requestURI'
+1582343867496	Extract local variable 'method'
+1582344105257	Extract local variable 'put'
+1582349311170	Copy file
+1582349424132	Copy source folder
+1582349467986	Copy package
+1582349513261	Copy package

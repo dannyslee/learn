@@ -1,0 +1,5 @@
+package com.woniuxy.springmvc.core;
+
+public class Controller {
+
+}

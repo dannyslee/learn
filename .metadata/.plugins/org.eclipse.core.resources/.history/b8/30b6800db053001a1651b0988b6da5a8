@@ -1,0 +1,11 @@
+package learn.woniuxy.reflect;
+
+public class MapReflect {
+	private UserPO po;
+	private int key =2;
+	
+	public void setValue(int key){
+		po.setId(1);
+		po.setName("zhangsan");
+	}
+}

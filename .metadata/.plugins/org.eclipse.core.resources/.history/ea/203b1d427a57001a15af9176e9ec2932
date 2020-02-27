@@ -1,0 +1,19 @@
+package com.woniuxy.springmvc.controller;
+
+import javax.servlet.http.HttpServletRequest;
+
+import com.woniuxy.springmvc.annotation.Controller;
+import com.woniuxy.springmvc.annotation.RequestMapping;
+
+@Controller
+@RequestMapping("/u")
+public class UserController {
+	@RequestMapping("/show")
+	public void login(HttpServletRequest req) {
+		System.out.println(req.getRequestURI());
+	}
+	@RequestMapping("/rege")
+	public void rege() {
+		
+	}
+}

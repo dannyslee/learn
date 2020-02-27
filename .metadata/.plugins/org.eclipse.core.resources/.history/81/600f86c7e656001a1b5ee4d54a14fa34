@@ -1,0 +1,5 @@
+package com.woniuxy.springmvc.controller;
+
+public class GoodsController {
+
+}

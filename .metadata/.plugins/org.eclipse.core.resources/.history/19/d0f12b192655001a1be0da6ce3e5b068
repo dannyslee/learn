@@ -1,0 +1,48 @@
+package weekwork.woniuxy.web.listener;
+
+import javax.servlet.ServletContextEvent;
+import javax.servlet.ServletContextListener;
+import javax.servlet.ServletRequestEvent;
+import javax.servlet.ServletRequestListener;
+import javax.servlet.http.HttpSessionEvent;
+import javax.servlet.http.HttpSessionListener;
+
+/**
+ * Application Lifecycle Listener implementation class RequsetListener
+ *
+ */
+public class RequsetListener implements ServletRequestListener, HttpSessionListener, ServletContextListener {
+
+
+    public RequsetListener() {
+    }
+
+
+    public void sessionCreated(HttpSessionEvent se)  { 
+    }
+
+
+    public void requestDestroyed(ServletRequestEvent sre)  { 
+    }
+
+
+    public void requestInitialized(ServletRequestEvent sre)  { 
+    	//当request对象被创建
+    	
+    	//获取数据
+    	sre.getServletContext()
+    }
+
+
+    public void sessionDestroyed(HttpSessionEvent se)  { 
+    }
+
+
+    public void contextDestroyed(ServletContextEvent sce)  { 
+    }
+
+
+    public void contextInitialized(ServletContextEvent sce)  { 
+    }
+	
+}

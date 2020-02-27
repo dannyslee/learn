@@ -1,0 +1,28 @@
+package learn.woniuxy.tcphomework;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
+public class ExecJDBC {
+	
+	
+	
+	
+	void sql(String sql) {
+		JDBCUtil util = new JDBCUtil();
+		Connection con = util.getConnection();
+		PreparedStatement state = null;
+		try {
+			state = con.prepareStatement(sql);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public static void main(String[] args) {
+		
+	}
+}

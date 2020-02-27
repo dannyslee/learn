@@ -1,0 +1,31 @@
+package com.woniuxy.springmvc.controller;
+
+import java.math.BigDecimal;
+
+public class Demo {
+	private  String name;
+	private  BigDecimal money;
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public BigDecimal getMoney() {
+		return money;
+	}
+	public void setMoney(BigDecimal money) {
+		this.money = money;
+	}
+	@Override
+	public String toString() {
+		return "Demo [name=" + name + ", money=" + money + "]";
+	}
+	
+	
+	
+	
+	
+	
+	
+}

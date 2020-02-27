@@ -1,0 +1,13 @@
+package com.woniuxy.springmvc.controller;
+
+import com.woniuxy.springmvc.annotation.Controller;
+import com.woniuxy.springmvc.annotation.RequestMapping;
+
+@Controller
+@RequestMapping("/UserController")
+public class UserController {
+	@RequestMapping("/show")
+	public void show() {
+		
+	}
+}

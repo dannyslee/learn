@@ -1,0 +1,65 @@
+
+
+package learn.woniuxy.tcphomework;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+public class ExecJDBC {
+
+	public static void sql(String sql,Object... args) {
+		
+		//判断参数args是否等于给定长度
+		JDBCUtil util = new JDBCUtil();
+		Connection con = util.getConnection();
+		PreparedStatement state = null;
+		ResultSet set = null;
+		try {
+			state = con.prepareStatement(sql);
+			//foreach获取占位符
+			int i=1;
+			for(Object arg:args) {
+					state.setObject(i, arg);
+					System.out.println(i+":"+arg.getClass().toString());
+					i++;
+			}
+			
+			
+//			int row = state.executeUpdate();
+//			System.out.println(row);
+			
+			//执行操作
+			boolean hasexec = state.execute();
+			//返回布尔值，判断是执行还是查询
+			System.out.println(hasexec);
+			if(hasexec) {
+				//处理查询字段
+				int count=1;
+				set = state.getResultSet();//获取数据集
+				while(set.next()) {
+					System.out.println(set.getObject(count));
+					count++;
+				}		
+				
+			}else {
+				//执行
+				int row = state.getUpdateCount();//获取更新数量
+				System.out.println(row);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			util.close(set, state, con);
+		}
+		
+	}
+	
+	public static void main(String[] args) {
+		String sql = "select * from users where u_account = ? ";
+		String sql2 = "update users set u_password= ? where u_account = ?";
+		sql(sql,"13912167612");
+	}
+}

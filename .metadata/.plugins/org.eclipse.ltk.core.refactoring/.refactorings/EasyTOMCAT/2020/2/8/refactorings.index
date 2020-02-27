@@ -1,0 +1,12 @@
+1582349392020	Delete element
+1582349443093	Move file
+1582349487150	Rename package 'weekwork.woniuxy.web.servlet'
+1582349524382	Rename package 'weekwork.woniuxy.web.listener'
+1582351218263	Delete element
+1582351224813	Delete element
+1582351229264	Delete element
+1582352322618	Rename type 'MyRequset'
+1582352711785	Rename package 'http.woniuxy.tomcat.Servlet'
+1582354214782	Extract local variable 'object'
+1582360675690	Extract local variable 'myHttpServlet'
+1582361489006	Extract local variable 'servletObject'

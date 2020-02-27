@@ -1,0 +1,47 @@
+package learn.woniuxy.anno;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+
+public class Execute {
+
+	public static <T> void executeMethod(Class<T> class1) {
+		try {
+			
+			boolean re = class1.isAnnotationPresent(Test.class);
+	    	System.out.println(re);
+	    	Method[] methods = class1.getDeclaredMethods();
+	    	T t = class1.newInstance();
+	    	for(Method method : methods) {
+	    		if(re) {
+		    		//执行当前方法
+	    			Object obj = method.invoke(t);
+	    			//获取Test
+	    			Test test = method.getDeclaredAnnotation(Test.class);
+	    			//
+	    			boolean bool = test.value();
+	    			if(bool) {
+	    				System.out.println(obj);
+	    			}
+		    	}
+	    	}
+			
+		} catch (SecurityException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalArgumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+}

@@ -1,0 +1,33 @@
+package com.woniuxy.springmvc.util;
+
+import java.lang.reflect.Field;
+
+public class ConverterUtil<T> implements Converter<String,Class<T>>{
+	
+	//单例模式
+	private static final ConverterUtil<?> converter = new ConverterUtil<>();
+	
+	public ConverterUtil() {}
+
+	public static ConverterUtil<?> getInstance() {
+		return converter;
+	}
+
+	@Override
+	public String convert(String k, Class<T> t) {
+		
+		
+		
+		return null;
+	}
+
+
+
+
+
+
+
+
+
+	
+}

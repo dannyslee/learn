@@ -1,0 +1,233 @@
+package learn.woniuxy.reflect;
+
+import java.io.Serializable;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
+import java.lang.reflect.Parameter;
+
+public class ReflectDemo implements Serializable {
+	
+	
+	/**
+	 * 构造器无法取得具体实现，主要得到结构
+	 */
+	private static final long serialVersionUID = 1L;
+
+	public static void main(String[] args) throws NoSuchFieldException, SecurityException, InstantiationException, IllegalAccessException, NoSuchMethodException, IllegalArgumentException, InvocationTargetException {
+		//获取目标类的Class实例
+		//方式一:建议使用该方法
+		//Class都有泛型，确定是哪个类的Class实例
+//		try {
+//			Class<ClassPO> cl1 = (Class<ClassPO>) Class.forName("learn.woniuxy.reflect.ClassPO");
+//		} catch (ClassNotFoundException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		
+		//方式二:需导包
+		Class<ClassPO> cl2  = ClassPO.class;
+		System.out.println(cl2);
+		
+		//方式三：需导包+分配了空间
+//		Class<ClassPO> cl3 = (Class<ClassPO>) new ClassPO().getClass();
+//		System.out.println(cl3);
+		
+		//获取目标类的类名
+		System.out.println(cl2.getSimpleName());
+		//获取类的类全面
+		System.out.println(cl2.getName());
+		//获取类的修饰符
+		System.out.println(Modifier.toString( cl2.getModifiers()));
+		
+		//获取实现的接口
+		Class[] interCls = cl2.getInterfaces();
+		System.out.println(interCls[0].getSimpleName());
+		
+		//获取当前父类
+		Class superCls = cl2.getSuperclass();
+		System.out.println(superCls.getSimpleName());
+		
+		//获取当前类的包
+		Package pak =  cl2.getPackage();
+		System.out.println(pak.getName());
+		
+		//创建测试数组
+		int[] nums = new int[10];
+		Class cl4 = nums.getClass();
+		System.out.println(cl2.isArray());
+		System.out.println(cl4.isArray());
+		
+		//获取数组类型的元素类的class实例
+		Class cl5 = cl4.getComponentType();
+		System.out.println(cl5.getSimpleName());
+		
+		//调用无参构造创建目标类对象
+		try {
+		  ClassPO po =  cl2.newInstance();//如果有参构造，就会报InstantiationException错误
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		//获取目标类构造器
+		//分单复数，分有无Declared，有Declared强调本类，没有强调oublic
+		//获取本类指定构造器，可确定泛型
+		Constructor<ClassPO>[] cons = (Constructor<ClassPO>[]) cl2.getDeclaredConstructors();
+		//获取本类指定构造器，可确定泛型
+		Constructor<ClassPO> con = null;
+		Constructor<ClassPO> conN = null;
+
+		try {
+			con =	cl2.getDeclaredConstructor(int.class,String.class);//含参构造器
+			conN = cl2.getDeclaredConstructor();
+		} catch (NoSuchMethodException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SecurityException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		//调用构造器创建目标对象
+		try {
+			ClassPO po1 =  con.newInstance(1,"张三");// 等于new ClassPO(1,"张三");
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalArgumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		//调用无参构造创建目标对象
+		try {
+			ClassPO po2 = conN.newInstance();
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalArgumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		//获取构造器结构信息
+		//获取构造器的访问修饰符
+		System.out.println(Modifier.toString(con.getModifiers()));
+		//获取构造器的参数列表
+		//获取参数个数
+		System.out.println(con.getParameterCount());
+		//获取参数类型
+		Class[] conTypes = con.getParameterTypes(); 
+		//获取参数
+		Parameter[] conParams = con.getParameters();
+		for(Parameter param:conParams) {
+			//参数类型
+			System.out.println(param.getType().getSimpleName());
+			//参数名字
+			System.out.println(param.getName());
+		}
+		
+		
+		//属性操作
+		//获取本类所有属性
+		Field[] fields = cl2.getDeclaredFields();
+		System.out.println(fields.length);
+		//获取本类指定属性
+		Field idField = cl2.getDeclaredField("c_no");
+		//获取本类指定public属性
+//		Field[] field1 = cl2.getFields();
+//		System.out.println(field1.length);
+		//获取属性相关信息
+		for(Field field:fields) {
+			//获取是属性修饰符
+			System.out.println(Modifier.toString(field.getModifiers()));
+			//获取属性类型的类名
+			System.out.println(field.getType().getSimpleName());
+			//获取属性名称
+			System.out.println(field.getName());
+		}
+		//为属性赋值和取值
+		//调用无参构造，创建目标类对象
+		ClassPO po = cl2.newInstance();
+		//获取目标属性
+		Field classField = cl2.getDeclaredField("c_class");
+		//突破当前Field对象的访问权限
+		classField.setAccessible(true);//只针对当前对象，不影响其他的同类对象
+		//Field.setAccessible(fields,true);
+		//为属性赋值
+		classField.set(po, "one");
+		System.out.println(po);
+		//取出属性值
+		Object obj = classField.get(po);
+		System.out.println(obj);
+		
+		//方法
+		//获取本类所有方法
+		Method[] methods = cl2.getDeclaredMethods();
+		//获取本类指定方法
+		Method toStringMethod = cl2.getDeclaredMethod("toString");
+		Method getClassMethod = cl2.getDeclaredMethod("setC_class",String.class);
+		//获取所有public方法
+		Method[] methods1 = cl2.getMethods();
+		//获取指定public方法
+		cl2.getMethod("setC_class", String.class);
+		//获取方法信息
+		for(Method me:methods) {
+			//获取方法修饰符
+			System.out.println(Modifier.toString(me.getModifiers()));
+			//获取方法返回值类型名称
+			System.out.println(me.getReturnType().getSimpleName());
+			//获取方法名称
+			System.out.println(me.getName());
+			//获取方法参数列表
+			Parameter[] paramsM = me.getParameters();
+			for (Parameter paramM : paramsM) {
+				//获取参数类型名称
+				System.out.println(paramM.getType().getSimpleName());
+				//获取参数名字
+				System.out.println(paramM.getName());
+			}
+		}
+		
+		//创建目标类对象
+		ClassPO poC = cl2.newInstance();
+		//执行方法po.setCname("Java");
+		Object o1 = getClassMethod.invoke(poC,"Java");
+		System.out.println(o1);
+		Object o=toStringMethod.invoke(poC);
+		System.out.println(o);
+		
+		//获取异常
+		Class<?>[] cls = getClassMethod.getExceptionTypes();
+		System.out.println(cls[0].getSimpleName());
+
+		
+	}
+	
+	//String[] strs
+	public static void demo(String...strs) {
+		System.out.println(strs.length);
+		for (String str : strs) {
+			System.out.println(str);
+		}
+	}
+
+}

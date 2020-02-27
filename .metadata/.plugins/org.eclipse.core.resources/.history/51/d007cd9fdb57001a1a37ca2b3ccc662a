@@ -1,0 +1,19 @@
+package com.woniuxy.springmvc.util;
+
+import com.woniuxy.springmvc.po.UserPO;
+
+public class UserPOConverter implements Converter<String, UserPO> {
+
+	@Override
+	public UserPO convert(String t) {
+		//创建UserPO实例
+		
+		//以","分割paramterMAP获取的参数数组
+		
+		//setter赋值时，进行类型转换
+		
+		//返回参数对象
+		return null;
+	}
+
+}

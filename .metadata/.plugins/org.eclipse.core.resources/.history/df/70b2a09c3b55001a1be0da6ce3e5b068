@@ -1,0 +1,5 @@
+package http.woniuxy.tomcat.Servlet;
+
+public abstract class MyHttpServlet {
+
+}

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="EasySpringMVC">
+        <property name="context-root" value="EasySpringMVC"/>
+        <property name="java-output-path" value="/EasySpringMVC/build/classes"/>
+    </wb-module>
+</project-modules>

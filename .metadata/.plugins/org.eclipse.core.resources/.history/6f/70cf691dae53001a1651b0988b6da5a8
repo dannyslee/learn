@@ -1,0 +1,12 @@
+package learn.woniuxy.reflect;
+
+public class MapReflect {
+	private int id;
+	private String name;
+	private int key;
+	
+	public void setValue(int key){
+		this.id=1;
+		this.name= "张三";
+	}
+}

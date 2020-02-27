@@ -1,0 +1,15 @@
+package com.woniuxy.springmvc.controller;
+
+import java.math.BigDecimal;
+
+public class Demo {
+	public  String name;
+	public  BigDecimal money;
+	
+	
+	
+	
+	
+	
+	
+}

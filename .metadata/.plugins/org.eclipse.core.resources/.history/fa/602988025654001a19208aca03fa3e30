@@ -1,0 +1,20 @@
+package learn.woniuxy.anno;
+
+
+@A("admin")
+public class AnnotationDemo {
+	@A("xxxx")
+	public void demo() {
+		
+	}
+	
+    public void demo(@A("xxxx") String str) {
+		
+	}
+    
+    public static void main(String[] args) {
+    	@SuppressWarnings("unused")
+		@A("xxxx")
+		AnnotationDemo annotationDemo = new AnnotationDemo();
+	}
+}

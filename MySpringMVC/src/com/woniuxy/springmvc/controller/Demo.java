@@ -1,0 +1,37 @@
+package com.woniuxy.springmvc.controller;
+
+import java.io.Serializable;
+import java.math.BigDecimal;
+
+public class Demo implements Serializable{
+	private static final long serialVersionUID = 1L;
+	
+	private  String name;
+	private  BigDecimal money;
+	
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public BigDecimal getMoney() {
+		return money;
+	}
+	public void setMoney(BigDecimal money) {
+		this.money = money;
+	}
+	
+	@Override
+	public String toString() {
+		return "Demo [name=" + name + ", money=" + money + "]";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+}

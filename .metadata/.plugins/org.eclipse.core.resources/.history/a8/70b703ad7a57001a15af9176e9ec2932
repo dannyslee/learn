@@ -1,0 +1,29 @@
+package com.woniuxy.springmvc.controller;
+
+import java.io.IOException;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.woniuxy.springmvc.annotation.Controller;
+import com.woniuxy.springmvc.annotation.RequestMapping;
+
+@Controller
+@RequestMapping("/u")
+public class UserController {
+	@RequestMapping("/show")
+	public void login(HttpServletRequest req) {
+		System.out.println("UserController获取到："+req.getRequestURI());
+	}
+	@RequestMapping("/rege")
+	public void rege(HttpServletResponse resp) {
+		resp.setCharacterEncoding("utf-8");
+
+		try {
+			resp.getWriter().write("牛逼呀！兄弟！");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+}

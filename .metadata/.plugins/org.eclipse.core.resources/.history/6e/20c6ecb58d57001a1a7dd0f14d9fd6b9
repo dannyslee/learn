@@ -1,0 +1,8 @@
+package com.woniuxy.springmvc.util;
+
+public interface Converter<T, K> {
+	/*
+	 * 实现数据转换
+	 */
+	K  convert(T t);
+}

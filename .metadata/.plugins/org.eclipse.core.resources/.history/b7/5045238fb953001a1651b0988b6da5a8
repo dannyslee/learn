@@ -1,0 +1,26 @@
+package learn.woniuxy.reflect;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class MapReflect {
+	//定义对象池
+	private Map<String,Object> objPool = new HashMap<>();
+	
+	//定义对象创建方法
+	private Object createObjcet(String className) throws ClassNotFoundException, InstantiationException, IllegalAccessException {
+		Class<?> classObj = Class.forName(className);
+		return classObj.newInstance();		
+	}
+	
+	public <T> T encapsulation(Map<String,Object> objPool,Class<T> obj ) throws Exception {
+		T po =null;
+		//创建目标类对象
+		po=obj.newInstance();
+		
+		return po;
+		
+	}
+	
+	
+}

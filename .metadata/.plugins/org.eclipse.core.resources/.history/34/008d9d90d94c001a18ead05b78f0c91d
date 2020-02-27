@@ -1,0 +1,56 @@
+package learn.woniuxy.tcphomework;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+public class ExecJDBC {
+	
+	
+	
+	
+	void sql(String sql,int len,Object[] fields,Object... args) {
+		
+		//判断参数args是否等于给定长度
+		JDBCUtil util = new JDBCUtil();
+		Connection con = util.getConnection();
+		PreparedStatement state = null;
+		ResultSet set = null;
+		try {
+			state = con.prepareStatement(sql);
+			boolean hasexec = state.execute();		
+			if(hasexec) {
+				//查询
+				//处理占位符？
+				int i=1;
+				for(Object arg:args) {
+						state.setObject(i, arg);
+						i++;
+				}
+				//处理查询字段
+				while(set.next()) {
+					set.getObject(1);
+					//循环一次，处理一行查询结果
+					int gt_id = set.getInt("gt_id");
+					String gt_name = set.getString("gt_name");
+					String gt_img = set.getString("gt_img");
+					String gt_description = set.getString("gt_description");
+					System.out.println(gt_id+":"+gt_name+":"+gt_img+":"+gt_description+"!");
+				}
+				
+				
+			}else {
+				//执行
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public static void main(String[] args) {
+		
+	}
+}

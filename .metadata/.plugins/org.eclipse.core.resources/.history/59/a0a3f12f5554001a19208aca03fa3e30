@@ -1,0 +1,8 @@
+package learn.woniuxy.anno;
+
+
+@A
+public class AnnotationDemo {
+	@A("张三")
+	
+}

@@ -1,0 +1,23 @@
+package learn.woniuxy.reflect;
+
+import java.lang.reflect.Method;
+import java.util.HashMap;
+import java.util.Map;
+
+public class MapReflect {
+	//定义对象池
+	private Map<String,Object> objPool = new HashMap<>();
+	
+	//定义对象创建方法
+
+	
+	public Object encapsulation(Map<String,Object> map,Object obj ) throws NoSuchMethodException, SecurityException {
+		Class cla = (Class) obj.getClass();
+		Method setNameMethod = cla.getDeclaredMethod("setName", String.class);
+		Method setIdMethod = cla.getDeclaredMethod("setId", String.class);
+		
+		return obj;	
+	}
+	
+	
+}
