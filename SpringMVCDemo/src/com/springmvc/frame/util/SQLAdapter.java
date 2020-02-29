@@ -76,7 +76,7 @@ public class SQLAdapter {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
-			C3P0Util.close(state, set);
+			C3P0Util.close(set,state);
 		}
 		return result;
 	}
@@ -141,7 +141,7 @@ public class SQLAdapter {
 			e.printStackTrace();
 		}finally {
 			//资源释放
-			C3P0Util.close(state, set);
+			C3P0Util.close(set,state);
 		}
 		return list;
 	}
@@ -186,10 +186,10 @@ public class SQLAdapter {
 						}
 						//获取属性类型
 						Class fieldTypeCl=field.getType();
-						//判断查询结果是否为当前属性类型值
-						if(!fieldTypeCl.isInstance(obj)){
-							continue;
-						}
+						//判断查询结果是否为当前属性类型值（不过会将基本类型装箱为包装类）
+//						if(!fieldTypeCl.isInstance(obj)){
+//							continue;
+//						}
 						//获取set方法名称
 						String setMethodName="set"+fieldName.substring(0,1).toUpperCase()+fieldName.substring(1);
 						//获取set方法Method对象
@@ -204,7 +204,7 @@ public class SQLAdapter {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
-			C3P0Util.close(state, set);
+			C3P0Util.close(set,state);
 		}
 		return po;
 	}

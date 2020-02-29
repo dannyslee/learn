@@ -152,10 +152,11 @@ public class C3P0Util {
 	 * @param state
 	 * @param set
 	 */
-	public static void close(Statement state,ResultSet set) {
+	public static void close(ResultSet set,Statement state) {
 		
 		try {
-			set.close();
+			if(set!=null)
+			   set.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

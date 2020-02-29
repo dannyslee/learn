@@ -18,18 +18,20 @@ public class SendMail {
 	public final static String sender ="dannyslee@foxmail.com";
 	//授权码（钥匙），有了钥匙邮件系统才能知道你是有权限用该邮箱发送邮件的
 	public final static String key="zgjadwjcyelkbghj";
-	public static void main(String[] args){       
-		try {
-			//你已经成功购~ 可以随机生成验证码
-			//存入本地，与对方获取的进行比对
-			new SendMail().send("dannyslee@me.com", "邮件测试", "你已经成功购买了GirlCloset中的商品！");
-		} catch (AddressException e) {
-			e.printStackTrace();
-		} catch (MessagingException e) {
-			e.printStackTrace();
-		}
-
-	}
+	
+	
+//	public static void main(String[] args){       
+//		try {
+//			//你已经成功购~ 可以随机生成验证码
+//			//存入本地，与对方获取的进行比对
+//			new SendMail().send("dannyslee@me.com", "邮件测试", "你已经成功购买了GirlCloset中的商品！");
+//		} catch (AddressException e) {
+//			e.printStackTrace();
+//		} catch (MessagingException e) {
+//			e.printStackTrace();
+//		}
+//
+//	}
 	/**
 	 * 
 	 * @param receiver 邮件接收方
