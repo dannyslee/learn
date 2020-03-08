@@ -17,6 +17,18 @@ public class MailPO {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+	
+	
+	public MailPO(String m_name, String m_tel, String m_address, int mu_id) {
+		super();
+	
+		this.m_name = m_name;
+		this.m_tel = m_tel;
+		this.m_address = m_address;
+		this.mu_id = mu_id;
+	
+	}
+	
 	public MailPO(int m_id, String m_name, String m_tel, String m_address, int mu_id, int m_soft) {
 		super();
 		this.m_id = m_id;

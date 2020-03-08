@@ -52,7 +52,7 @@ public class TestController {
 		// 获取验证码
 		System.out.println("获取验证码");
 		// 创建验证码对象
-		ValidateCode code = new ValidateCode(500, 200, 8, 5);
+		ValidateCode code = new ValidateCode(100, 36, 4, 3);
 		// 获取验证码字符串
 		String codeStr = code.getCode();
 		// 存入session

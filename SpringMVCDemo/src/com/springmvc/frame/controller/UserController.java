@@ -44,7 +44,7 @@ public class UserController {
 			return false;
 		}
 		//获取浏览器session对象
-		HttpSession session = req.getSession();
+		HttpSession session = req.getSession(false);
 		
 		//其余判断交给过滤器(过滤器最后实现,这里先将过滤写入Controller里)
 		if(!checkLoginRegex(session,loginCode,user,password)) {
@@ -85,7 +85,7 @@ public class UserController {
 		}
 	    
 		//获取浏览器session
-		HttpSession session = req.getSession();
+		//HttpSession session = req.getSession();
 		//过滤器筛选（暂时在Controller层实现）
 		//如果返回空，说明满足基本正则
 		if(checkRegisterRegex(req,resp,user,password)==null) {
@@ -192,8 +192,8 @@ public class UserController {
 		//若不为空,先删除存入的验证码
 		session.removeAttribute("loginCode");
 		//将sessionloginPic转化为String类型，为对比用户输入的验证码做准备
-//		String sessionLoginPicStr = (String) sessionLoginPic;
-//		System.out.println(sessionLoginPicStr);
+		//String sessionLoginPicStr = (String) sessionLoginPic;
+		//System.out.println(sessionLoginPicStr);
 		// 对比得到的验证码，是否为session存着的验证码	
 		if(!sessionLoginPicStr.equalsIgnoreCase(code)) {//不区分大小写的比较：equalsIgnoreCase
 			//若不等于

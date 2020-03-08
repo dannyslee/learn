@@ -3,6 +3,7 @@ package com.springmvc.frame.po;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 
 public class OrderPO {
@@ -26,10 +27,11 @@ public class OrderPO {
 	private int o_soft;
 	
 	
-	
 	public OrderPO() {
 		super();
+		// TODO Auto-generated constructor stub
 	}
+
 	public OrderPO(int o_id, String o_no, String o_payid, Timestamp o_creattime, Timestamp o_updatetime, int o_status,
 			int ou_id, int o_soft) {
 		super();
@@ -42,6 +44,26 @@ public class OrderPO {
 		this.ou_id = ou_id;
 		this.o_soft = o_soft;
 	}
+	
+	public OrderPO(String o_no, String o_payid, Timestamp o_creattime, Timestamp o_updatetime, int o_status,
+			int ou_id) {
+		super();
+		this.o_no = o_no;
+		this.o_payid = o_payid;
+		this.o_creattime = o_creattime;
+		this.o_updatetime = o_updatetime;
+		this.o_status = o_status;
+		this.ou_id = ou_id;
+	}
+	
+	
+	public OrderPO(String o_no,Timestamp o_creattime,int o_status, int ou_id) {
+		this.o_no = o_no;
+		this.o_creattime = o_creattime;
+		this.o_status = o_status;
+		this.ou_id = ou_id;
+	}
+
 	public int getO_id() {
 		return o_id;
 	}

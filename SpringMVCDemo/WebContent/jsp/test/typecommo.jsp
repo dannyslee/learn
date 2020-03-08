@@ -14,16 +14,19 @@
 					dataType: "json",
 					success: function(data) {
 						//alert(data[0].t_typename);
+						
+						
+						
 						var context = "";
-						for (var i = 0; i < data.length; i++) {
+						for (var i = 0; i < data.obj1.length; i++) {
 							context += '<li>'
-							           +'<a href="paging.jsp?t_id='+data[i].t_id+'">'
+							           +'<a href="paging.jsp?t_id='+data.obj1[i].t_id+'">'
 							           +'<div>'
-							           +'<img src="'+data[i].t_img+'">'
+							           +'<img src="'+data.obj1[i].t_img+'">'
 							           +'</div>'
 							           +'<div>'
-							           +'<h3>'+data[i].t_typename+'</h3>'
-							           +'<p>'+data[i].t_typeshow+'</p>'
+							           +'<h3>'+data.obj1[i].t_typename+'</h3>'
+							           +'<p>'+data.obj1[i].t_typeshow+'</p>'
 							           +'</div>'
 							           +'</a>'
 							           +'</li>';

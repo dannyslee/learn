@@ -28,6 +28,16 @@ public class ItemOrderPO {
 		this.io_id = io_id;
 		this.i_soft = i_soft;
 	}
+	
+	public ItemOrderPO(int ic_id, int i_num, BigDecimal i_price, int io_id) {
+		super();
+
+		this.ic_id = ic_id;
+		this.i_num = i_num;
+		this.i_price = i_price;
+		this.io_id = io_id;
+	}
+	
 	public int getI_id() {
 		return i_id;
 	}

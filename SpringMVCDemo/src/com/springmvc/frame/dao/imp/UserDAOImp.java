@@ -30,6 +30,11 @@ public class UserDAOImp implements UserDAO {
 		return ExecJDBC.sql(con, sql, user,password);
 	}
 
+	public UserPO SearchUserByuid(Connection con, int u_id) {
+		String sql = "select u_id,u_user,u_password,ur_id,u_soft from `user` where u_id=? and u_soft=0";
+		return ExecJDBC.sql(sql, con, UserPO.class, u_id);
+	}
+
 	
 	
 }
