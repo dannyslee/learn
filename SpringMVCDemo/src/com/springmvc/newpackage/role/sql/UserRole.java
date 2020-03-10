@@ -42,7 +42,7 @@ public enum UserRole implements SQLtodo{
 		@Override
 		public Object sql(Object... args) {		
 			String sql = "insert into `user`(u_user,u_password,ur_id) values(?,?,1)";
-			return new Result(ExecJDBC.sql(sql, (Connection)args[0], UserPO.class, args[1]));
+			return new Result(ExecJDBC.sql(sql, (Connection)args[0],(String)args[1],(String)args[2]));
 		}
 	},
 

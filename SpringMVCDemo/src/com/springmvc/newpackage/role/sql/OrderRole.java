@@ -36,12 +36,12 @@ public enum OrderRole implements SQLtodo {
 	},
 	
 	//修改订单
-	ORDER_UPDATE_OID_OSTATUS{
+	ORDER_UPDATE_OSTATUS_AND_OPAYID_BY_OID{
 
 		@Override
 		public Object sql(Object... args) {
-			// TODO Auto-generated method stub
-			return null;
+			String sql = "update `order` SET o_status=?,o_payid=? where o_no=?";
+			return new Result(ExecJDBC.sql(sql, (Connection)args[0],(int)args[1],(String)args[2],(String)args[3]));
 		}
 		
 	},
@@ -51,7 +51,7 @@ public enum OrderRole implements SQLtodo {
 
 		@Override
 		public Object sql(Object... args) {
-			String sql="select o_id,o_no,o_payid,o_creattime,o_updatetime,o_status,ou_id,o_soft from `order` where ou_id=? and o_soft=0";
+			String sql="select o_id,o_no,o_payid,o_creattime,o_updatetime,o_status,ou_id,o_soft from `order` where ou_id=? and o_soft=0 order by o_creattime desc";
 			return new Result(ExecJDBC.sqlByObj(sql,(Connection)args[0], OrderPO.class, (int)args[1]));
 		}
 		

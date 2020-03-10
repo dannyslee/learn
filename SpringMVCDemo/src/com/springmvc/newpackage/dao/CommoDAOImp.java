@@ -28,8 +28,11 @@ public class CommoDAOImp extends CommoDAOAbs implements DAO {
 		
 		return (Result)update("COMMO_UPDATE_STOCKID_COMMOID",con,number,sc_id);
 	}
-
 	
 	
+	// 通过商品类型id倒叙查询
+	public Result SearchCommodititesBytidDesc(Connection con, int ct_id,int page) {
+		return (Result) select("COMMO_SELECT_TYPEID_PAGEID_DESC", con, ct_id,page);
+	}
 
 }

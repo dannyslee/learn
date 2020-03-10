@@ -29,6 +29,7 @@ public class OrderController {
 		
 		//获取快递信息
 		MailPO mailPO = new MailPO(m_name,m_tel,m_address,u_id);
+		System.out.println(mailPO);
 		if(mailPO.getM_address()==null || mailPO.getM_tel()==null || mailPO.getM_name()==null) {
 			return new Result("登录信息不全");
 		}
@@ -43,9 +44,39 @@ public class OrderController {
 		}
 		//生成订单
 		ServiceFactory.getInstance("order").getOrder().createOrder(req, listCartCommoPO, u_id);
-		//情况购物车
+		//清空购物车
 		ServiceFactory.getInstance("cart").getCart().getClearCart(u_id);
 		
 		return new Result("订单创建成功");		
+	}
+	
+	
+	@RequestMapping("/showorder")
+	@ResponseBody
+	public Result showOrder(HttpServletRequest req) {
+		// 获取session
+		Object sessionAttribute = req.getSession(false).getAttribute("user");
+		if (sessionAttribute == null) {
+			return new Result("请重新登录！");
+		}
+		// 获取u_id
+		int u_id = ((UserPO) (((Result) sessionAttribute).getObj1())).getU_id();
+		// 得到返回结果
+		return ServiceFactory.getInstance("order").getOrder().getSearchOrdersByUserId(u_id);
+	}
+	
+	@RequestMapping("/showitem")
+	@ResponseBody
+	public Result showItemOrder(HttpServletRequest req,int o_id) {
+		// 获取session
+		Object sessionAttribute = req.getSession(false).getAttribute("user");
+		if (sessionAttribute == null) {
+			return new Result("请重新登录！");
+		}
+		// 获取u_id
+		int u_id = ((UserPO) (((Result) sessionAttribute).getObj1())).getU_id();
+		// 得到返回结果
+		return ServiceFactory.getInstance("item").getItenOrder().getSearchOrderItemCommo(u_id, o_id);
+	
 	}
 }

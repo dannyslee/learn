@@ -21,16 +21,17 @@ public class OrderDAOImp extends OrderDAOAbs implements DAO {
 		return (Result)select("ORDER_SELECT_ALL",con);
 	}
 
-	@Override
-	public Result changeOrderStatus(Connection con, int o_id, int o_status) {
-		
-		return (Result)select("ORDER_SELECT_ALL",con,o_id,o_status);
-	}
-
+	
 	@Override
 	public Result searchOrdersByUserId(Connection con, int ou_id) {
 		
 		return (Result)select("ORDER_SELECT_UID",con,ou_id);
+	}
+
+	@Override
+	public Result changeOrderStatusAndPayId(Connection con, int o_status, String o_payid, String o_no) {
+		
+		return (Result)update("ORDER_UPDATE_OSTATUS_AND_OPAYID_BY_OID",con,o_status,o_payid,o_no);
 	}
 
 

@@ -7,10 +7,22 @@
   <servlet>
     <servlet-name>DispatcherServlet</servlet-name>
     <servlet-class>com.woniuxy.springmvc.core.DispatcherServlet</servlet-class>
-    <load-on-startup>1</load-on-startup>    
+    <load-on-startup>1</load-on-startup>
   </servlet>
   <servlet-mapping>
     <servlet-name>DispatcherServlet</servlet-name>
     <url-pattern>/controller/*</url-pattern>
   </servlet-mapping>
+  <filter>
+    <display-name>AdminFilter</display-name>
+    <filter-name>AdminFilter</filter-name>
+    <filter-class>com.springmvc.frame.filter.AdminFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>AdminFilter</filter-name>
+    <url-pattern>/shopweb/order.jsp</url-pattern>
+  </filter-mapping>
+  <listener>
+    <listener-class>com.springmvc.frame.listener.UserListener</listener-class>
+  </listener>
 </web-app>

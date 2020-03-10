@@ -18,6 +18,17 @@ public enum CommoRole implements SQLtodo{
 		}
 		
 	},
+	
+	COMMO_SELECT_TYPEID_PAGEID_DESC{
+
+		@Override
+		public Object sql(Object... args) {
+			String sql = "select c_id,c_name,c_img,c_show,c_price,c_cartimg,c_stock,ct_id,c_soft from commodities where ct_id=? and c_soft=0 order by c_id desc limit ?,10";
+			return new Result(ExecJDBC.sqlByObj(sql, (Connection)args[0],CommoditityPO.class, (int)args[1], (int)args[2]));
+		}
+		
+	},
+	
 	//以产品id进行查询
 	COMMO_SELECT_COMMOID{
 

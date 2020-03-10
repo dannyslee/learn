@@ -9,17 +9,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.springmvc.frame.po.UserPO;
 import com.springmvc.frame.service.UserService;
 import com.springmvc.frame.service.imp.UserServiceImp;
 import com.springmvc.frame.util.MD5Encoding;
 import com.springmvc.frame.util.RegexUtil;
 import com.springmvc.frame.util.SendMail;
+import com.springmvc.newpackage.po.UserPO;
 import com.springmvc.newpackage.result.Result;
 import com.springmvc.newpackage.service.factory.ServiceFactory;
 import com.woniuxy.springmvc.annotation.framework.Controller;
 import com.woniuxy.springmvc.annotation.handlermapping.RequestMapping;
 import com.woniuxy.springmvc.annotation.handlermapping.ResponseBody;
+import com.woniuxy.springmvc.annotation.handlermapping.ResponseRedirect;
 
 import cn.dsna.util.images.ValidateCode;
 
@@ -90,9 +91,12 @@ public class UserController {
 			
 			//通过账号进行查询，如果不为空，不允许注册
 			//UserService userRegisterService =  new UserServiceImp();
-		
+			
+			Result searchRegiterUser = ServiceFactory.getInstance("user").getUser().getSearchRegiterUser(user);
+			 UserPO obj1 = (UserPO)searchRegiterUser.getObj1();
+			
 			//if(!(userRegisterService.getSearchRegiterUser(user).getU_user()==null)){
-			if(ServiceFactory.getInstance("user").getUser().getSearchRegiterUser(user).getObj1()!=null) {
+			if(obj1.getU_user()!=null) {
 				return new Result("账号已存在");
 			}
 			//编辑邮件文本内容
@@ -118,23 +122,31 @@ public class UserController {
 	
 	//邮箱实际业务实现方法
 	@RequestMapping("/realRegister")
-	@ResponseBody
-	public Result realRegister(String u,String ADBCJJJHIKNBCDEFY) {
+	@ResponseRedirect
+	public String realRegister(String u,String ADBCJJJHIKNBCDEFY) {
+		String uri="shopweb/login.jsp";
 		//处理逻辑层的业务
 		//通过账号进行查询，如果不为空，不允许注册
 		//UserService userRegisterService =  new UserServiceImp();
 		//if(!(userRegisterService.getSearchRegiterUser(u).getU_user()==null)){
-		if(ServiceFactory.getInstance("user").getUser().getSearchRegiterUser(u).getObj1()!=null) {
-			return new Result("抱歉,该链接失效，请重新注册！");
+		Result searchRegiterUser = ServiceFactory.getInstance("user").getUser().getSearchRegiterUser(u);
+		 UserPO obj1 = (UserPO)searchRegiterUser.getObj1();
+		
+		//if(!(userRegisterService.getSearchRegiterUser(user).getU_user()==null)){
+		if(obj1.getU_user()!=null) {
+			return "shopweb/login.jsp";
 		}
+//		if(ServiceFactory.getInstance("user").getUser().getSearchRegiterUser(u).getObj1()!=null) {
+//			return new Result("抱歉,该链接失效，请重新注册！");
+//		}
 		//如果没有，执行插入，并得到一个成功与否的反馈（是否为false）
 		Result insertUser = ServiceFactory.getInstance("user").getUser().getInsertUser(u, ADBCJJJHIKNBCDEFY);
 		//boolean insertUser = userRegisterService.getInsertUser(u,ADBCJJJHIKNBCDEFY);
 		//若返回值不为false
 		if(insertUser.isFlag()) {
-			return new Result("注册成功");
+			return "shopweb/index.jsp";
 		}
-		return new Result("注册失败");		
+		return uri;		
 	}
 	
 	
@@ -221,5 +233,36 @@ public class UserController {
 		}
 
 		return res;
+	}
+	
+	
+	@RequestMapping("/chooseAccount")
+	@ResponseRedirect
+	public String chooseAccount(HttpServletRequest req,HttpServletResponse resp) {
+		String uri="shopweb/login.jsp";
+		
+		if(req.getSession(false).getAttribute("user")==null) {
+			return uri;
+		}
+		
+		UserPO sesssionAttribute = (UserPO)(((Result)req.getSession(false).getAttribute("user")).getObj1());
+		
+		if(sesssionAttribute.getUr_id()==1) {
+			uri= "shopweb/myaccounta.jsp";
+		}else {
+			uri= "shopweb/myaccountb.jsp";
+		}
+		
+		return uri;
+	}
+	
+	@RequestMapping("/logout")
+	@ResponseRedirect
+	public String logout(HttpServletRequest req,HttpServletResponse resp) {
+		
+		req.getSession(false).removeAttribute("user");
+		
+		
+		return "shopweb/index.jsp";
 	}
 }

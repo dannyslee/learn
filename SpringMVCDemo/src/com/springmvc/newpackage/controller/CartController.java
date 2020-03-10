@@ -33,6 +33,13 @@ public class CartController {
 			//获取session中的uid
 			int u_id = ((UserPO)(((Result)session.getAttribute("user")).getObj1())).getU_id();
 			
+			if(u_id==0) {
+				session.removeAttribute("user");
+				return new Result("抱歉！由于服务器原因，您需要重新登录！");
+			}
+			
+			System.out.println("---------------------------------------通过session获取的uid:"+u_id+"----------------------------------------------------------");
+			
 			//如果session用户信息不存在
 			if(session.getAttribute("user")==null) { return new Result("请重新登录！"); }
 			
@@ -119,6 +126,9 @@ public class CartController {
 				return new Result("请重新登录！");
 			}		
 			//以商品id,清除该商品session数据
+			if(session.getAttribute("carts")==null) {
+				return new Result("请重新登录！");
+			}
 			((Map<Integer, ShoppingCartPO>)session.getAttribute("carts")).remove(sc_id);
 			
 			//清除该商品数据库数据,并返回结果	
@@ -249,8 +259,12 @@ public class CartController {
 				return new Result("请重新登录！");
 			}
 			//获取session存入的用户信息
-			int u_id = ((UserPO)((Result)session.getAttribute("user")).getObj1()).getU_id();
+			if(session.getAttribute("user")==null) {
+				return new Result("请重新登录！");
+			}
 			
+			int u_id = ((UserPO)((Result)session.getAttribute("user")).getObj1()).getU_id();
+
 			//session数据不为空，从session中取
 //			if(session.getAttribute("carts")!=null) {
 //				return new Result((Collection<ShoppingCartPO>)((Map)session.getAttribute("carts")).values());

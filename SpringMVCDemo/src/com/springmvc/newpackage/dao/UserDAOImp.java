@@ -26,7 +26,7 @@ public  class UserDAOImp extends UserDAOAbs implements DAO{
 	@Override
 	public Result insertRegiterUser(Connection con, String user, String password) {
 		
-		return (Result)insert("USER_INSERT_USER_P",user,password);
+		return (Result)insert("USER_INSERT_USER_P",con,user,password);
 	}
 
 

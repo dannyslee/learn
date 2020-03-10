@@ -25,6 +25,12 @@ public class CommoController {
 	}
 	
 	@ResponseBody
+	@RequestMapping("/showCommoDesc")
+	public Result showAllCommoditiesDesc(int t_id, int page) {
+		return ServiceFactory.getInstance("commo").getCommo().getSearchCommodititesBytidDesc(t_id, page);
+	}
+	
+	@ResponseBody
 	@RequestMapping("/showOneCommo")
 	public Result showOneCommodity(int c_id) {
 		return ServiceFactory.getInstance("commo").getCommo().getSearchCommoditityBycid(c_id);

@@ -39,10 +39,11 @@ public abstract class OrderServiceAbs implements ServiceSelectInterface,ServiceU
 	public abstract Result getSaveOrder(OrderPO orderPO);
 
 	// 查询全部订单
-	public abstract Result getSearchAllOrder(Connection con);
+	public abstract Result getSearchAllOrder();
 
 	// 修改订单状态
-	public abstract Result getChangeOrderStatus(int o_id, int o_status);
+	public abstract Result getChangeOrderStatusAndPayId(int o_status,String o_payid,String o_no);
+
 
 	// 根据用户编号查询订单信息
 	public abstract Result getSearchOrdersByUserId(int ou_id);

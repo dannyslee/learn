@@ -37,6 +37,8 @@ public class OrderServiceImp extends OrderServiceAbs implements Service {
 		if (listCartCommoPO.isEmpty()) {
 			return new Result("无购物车数据，订单无法生成");
 		}
+		//总金额预设
+		BigDecimal totolprice = new BigDecimal(0 + "");
 		// 数据事务
 		Connection con = C3P0Util.getConnection();
 		try {
@@ -102,11 +104,17 @@ public class OrderServiceImp extends OrderServiceAbs implements Service {
 				}
 
 				// 获取总金额
-				BigDecimal totolprice = new BigDecimal(0 + "");
 				totolprice = totolprice.add(priceXs_num);
-
+				
+				
 			}
-
+			
+			//给order存入总金额
+			orderPO.setSession_subtotal(totolprice);
+			
+			//将订单存入session
+			req.getSession(false).setAttribute("order", orderPO);
+			
 			// 事务提交
 			con.commit();
 	
@@ -120,7 +128,7 @@ public class OrderServiceImp extends OrderServiceAbs implements Service {
 		}
 
 		C3P0Util.close(con);
-		return new Result("订单生成成功！");
+		return new Result("订单创建成功！");
 	}
 	
 	/**
@@ -152,16 +160,11 @@ public class OrderServiceImp extends OrderServiceAbs implements Service {
 	}
 
 	@Override
-	public Result getSearchAllOrder(Connection con) {
+	public Result getSearchAllOrder() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
-	public Result getChangeOrderStatus(int o_id, int o_status) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	/**
 	 * 展示订单页
@@ -169,7 +172,15 @@ public class OrderServiceImp extends OrderServiceAbs implements Service {
 	@Override
 	public Result getSearchOrdersByUserId(int ou_id) {
 		Connection con = C3P0Util.getConnection();
-		Result select = (Result)getSelect("ORDERDAO_SELECT_UID",ou_id);
+		Result select = (Result)getSelect("ORDERDAO_SELECT_UID",con,ou_id);
+		C3P0Util.close(con);
+		return select;
+	}
+
+	@Override
+	public Result getChangeOrderStatusAndPayId(int o_status, String o_payid, String o_no) {
+		Connection con = C3P0Util.getConnection();
+		Result select = (Result)getUpdate("ORDERDAO_UPDATE_OSTATUS_AND_OPAYID_BY_OID",con,o_status,o_payid,o_no);
 		C3P0Util.close(con);
 		return select;
 	}

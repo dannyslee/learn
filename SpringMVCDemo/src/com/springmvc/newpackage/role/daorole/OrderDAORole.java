@@ -23,11 +23,12 @@ public enum OrderDAORole implements DAOTodo {
 		}
 		
 	},
-	ORDERDAO_UPDATE_OID_OSTATUS{
+	
+	ORDERDAO_UPDATE_OSTATUS_AND_OPAYID_BY_OID{
 
 		@Override
 		public Object todo(Object... args) {
-			return DAOFactory.getInstance("order").getOrder().changeOrderStatus((Connection)args[0], (int)args[1],(int)args[2]);
+			return DAOFactory.getInstance("order").getOrder().changeOrderStatusAndPayId((Connection)args[0],(int)args[1],(String)args[2],(String)args[3]);
 		}
 		
 	},

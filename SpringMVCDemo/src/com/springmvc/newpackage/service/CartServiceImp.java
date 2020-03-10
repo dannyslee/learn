@@ -13,57 +13,57 @@ public class CartServiceImp extends CartServiceAbs implements Service {
 	@Override
 	public Result getInsertCart(int sc_id, int su_id, int s_num) {
 		Connection con = C3P0Util.getConnection();
-		DAOFactory.getInstance("cart").getCart().insertCart(con, sc_id, su_id, s_num);
+		Result insert = (Result)getInsert("CARTDAO_ISNERT_COMMOID_UID_NUMBERID", con,sc_id, su_id, s_num);
 		C3P0Util.close(con);
-		return null;
+		return insert;
 	}
 
 	@Override
 	public Result getDeleteCart(int s_id) {
         Connection con = C3P0Util.getConnection();
-        DAOFactory.getInstance("cart").getCart().deleteCart(con, s_id);
+        Result delete = (Result)getDelete("CARTDAO_DELETE_CARTID",con, s_id);
 		C3P0Util.close(con);
-		return null;
+		return delete;
 	}
 
 	@Override
 	public Result getClearCart(int su_id) {
         Connection con = C3P0Util.getConnection();
-        Result clearCart = DAOFactory.getInstance("cart").getCart().clearCart(con, su_id);
+        Result deleteAll = (Result)getDelete("CARTDAO_DELETEALL_UID",con, su_id);
 		C3P0Util.close(con);
-		return clearCart;
+		return deleteAll;
 	}
 
 	@Override
 	public Result getUpdateCart(int s_id, int su_id, int s_num) {
         Connection con = C3P0Util.getConnection();
-		Result updateCart = DAOFactory.getInstance("cart").getCart().updateCart(con, s_id, su_id, s_num);
+        Result update = (Result)getUpdate("CARTDAO_UPDATE_CARTID_UID_NUMBERID", con, s_id, su_id, s_num);
 		C3P0Util.close(con);
-		return updateCart;
+		return update;
 	}
 
 	@Override
 	public Result getSearchCartByid(int sc_id, int su_id) {
         Connection con = C3P0Util.getConnection();
-		Result searchCartByid = DAOFactory.getInstance("cart").getCart().searchCartByid(con, sc_id, su_id);
+        Result search = (Result)getSelect("CARTDAO_SELECT_COMMOID_UID", con, sc_id, su_id);
 		C3P0Util.close(con);
-		return searchCartByid ;
+		return search ;
 	}
 
 	@Override
 	public Result searchCartAllbyuid(int su_id) {
         Connection con = C3P0Util.getConnection();
-		Result searchCartAllbyuid = DAOFactory.getInstance("cart").getCart().searchCartAllbyuid(con, su_id);
+        Result search = (Result)getSelect("CARTDAO_SELECT_UID", con,su_id);
 		C3P0Util.close(con);
-		return searchCartAllbyuid;
+		return search;
 	}
 
 	@Override
 	public Result getSearchCartBysid(int s_id) {
         Connection con = C3P0Util.getConnection();
-		Result searchCartAllbysid = DAOFactory.getInstance("cart").getCart().searchCartAllbysid(con, s_id);
+        Result search = (Result)getSelect("CARTDAO_SELECT_CARTID", con,s_id);
 		C3P0Util.close(con);
-		return searchCartAllbysid;
+		return search;
 	}
 	
 }

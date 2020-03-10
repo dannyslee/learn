@@ -13,7 +13,7 @@ public class ItemOrderServiceImp extends ItemOrderServiceAbs implements Service 
 	@Override
 	public Result getSearchOrderItemCommo(int ou_id, int o_id) {
 		Connection con = C3P0Util.getConnection();
-		Result select = (Result)getSelect("ORDERITEMDAO_AND_COMMODAO_SELECT_UID_OID",ou_id,o_id);
+		Result select = (Result)getSelect("ORDERITEMDAO_AND_COMMODAO_SELECT_UID_OID",con,ou_id,o_id);
 		C3P0Util.close(con);
 		return select;
 	}

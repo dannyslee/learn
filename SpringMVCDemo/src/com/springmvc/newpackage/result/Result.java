@@ -1,5 +1,7 @@
 package com.springmvc.newpackage.result;
 
+import java.math.BigDecimal;
+
 public class Result {
 	//布尔值
 	private boolean flag;
@@ -7,8 +9,19 @@ public class Result {
 	private int no;
 	private int pageNow;
 	private int pageSplit;
+	//double 
+	private BigDecimal subtotal;
 	
-	
+
+
+	public BigDecimal getSubtotal() {
+		return subtotal;
+	}
+
+	public void setSubtotal(BigDecimal subtotal) {
+		this.subtotal = subtotal;
+	}
+
 	//long（用于计算商品总数，数据库的count是long类型）
 	private long count;
 	
@@ -43,6 +56,12 @@ public class Result {
 	
 	
 	
+	public Result(BigDecimal subtotal, String res) {
+		super();
+		this.subtotal = subtotal;
+		this.res = res;
+	}
+
 	public Result(long count) {
 		super();
 		this.count = count;

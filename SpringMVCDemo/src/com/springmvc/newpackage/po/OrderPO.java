@@ -1,5 +1,6 @@
 package com.springmvc.newpackage.po;
 
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -26,7 +27,19 @@ public class OrderPO {
 	//软删除
 	private int o_soft;
 	
+	//session总价
+	private BigDecimal session_subtotal;
 	
+	
+	
+	public BigDecimal getSession_subtotal() {
+		return session_subtotal;
+	}
+
+	public void setSession_subtotal(BigDecimal subtotal) {
+		this.session_subtotal = subtotal;
+	}
+
 	public OrderPO() {
 		super();
 		// TODO Auto-generated constructor stub
